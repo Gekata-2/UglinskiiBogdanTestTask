@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Objects
@@ -19,13 +20,14 @@ namespace Objects
         }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
+            ObjectsController.Instance.Add(this);
         }
 
-        // Update is called once per frame
-        void Update()
+        private void OnDestroy()
         {
+            ObjectsController.Instance.Remove(name);
         }
     }
 }
