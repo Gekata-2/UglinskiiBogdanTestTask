@@ -2,28 +2,24 @@ using System;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using PlayerInput = Player.PlayerInput;
 
 namespace UI
 {
     public class SideMenu : MonoBehaviour
     {
         [SerializeField] private GameObject menu;
-
-        private PlayerInputActions _input;
+        [SerializeField] private PlayerInput playerInput;
+        public event Action<bool> OnSideMenuSetActive;
         private bool _isActive;
+        public bool IsActive => _isActive;
 
-        private void Awake()
-        {
-            _input = new PlayerInputActions();
-            _input.FreeMovement.Enable();
-        }
-        
         private void Start()
         {
-            _input.FreeMovement.SideMenu.performed += OnSideMenu;
+            playerInput.onSideMenuOpen += OnSideMenu;
         }
 
-        private void OnSideMenu(InputAction.CallbackContext obj)
+        private void OnSideMenu()
         {
             switch (_isActive)
             {
@@ -36,7 +32,8 @@ namespace UI
                     menu.SetActive(true);
                     break;
             }
+
+            OnSideMenuSetActive?.Invoke(_isActive);
         }
-        
     }
 }

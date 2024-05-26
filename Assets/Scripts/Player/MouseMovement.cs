@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -8,51 +7,57 @@ namespace Player
     {
         [SerializeField] private float xSensitivity;
         [SerializeField] private float ySensitivity;
+        [SerializeField] private PlayerInput playerInput;
+        [SerializeField] private PlayerCore core;
         public event Action<float> OnHorizontalMove;
-
-        private PlayerInputActions _input;
         private float _xRotation;
-        private bool _canMove = true;
+        private Transform _inspectedObject;
 
-
-        private void Awake()
-        {
-            _input = new PlayerInputActions();
-        }
-
-
-        // Start is called before the first frame update
         private void Start()
         {
-            _input.FreeMovement.Enable();
-            _input.FreeMovement.SideMenu.performed += OnSideMenuOpen;
-            LockCursor();
+            core.OnObjectToInspectHit += OnObjectToInspect;
         }
 
-        private void OnSideMenuOpen(InputAction.CallbackContext obj)
+        private void OnObjectToInspect(Transform obj)
         {
-            switch (_canMove)
+            _inspectedObject = obj;
+        }
+
+        public enum State
+        {
+            Free,
+            LookAt,
+            Locked
+        }
+
+        private State _state;
+
+        public void SetState(State state, CursorLockMode lockMode)
+        {
+            _state = state;
+
+            Cursor.lockState = lockMode;
+        }
+
+        private void Update()
+        {
+            switch (_state)
             {
-                case true:
-                    _canMove = false;
-                    UnlockCursor();
+                case State.Free:
+                    MoveFree();
                     break;
-                case false:
-                    _canMove = true;
-                    LockCursor();
+                case State.LookAt:
+                    LookAt();
+                    break;
+                case State.Locked:
+                default:
                     break;
             }
         }
 
-        private Vector2 MouseDelta => _input.FreeMovement.MouseMovement.ReadValue<Vector2>();
-
-        // Update is called once per frame
-        private void Update()
+        private void MoveFree()
         {
-            if (!_canMove)
-                return;
-
-            Vector2 mouseInput = MouseDelta;
+            Vector2 mouseInput = playerInput.MouseDelta;
             mouseInput.x = mouseInput.x * Time.deltaTime * xSensitivity;
             mouseInput.y = mouseInput.y * Time.deltaTime * ySensitivity;
 
@@ -66,14 +71,9 @@ namespace Player
             }
         }
 
-        private void LockCursor()
+        private void LookAt()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-
-        private void UnlockCursor()
-        {
-            Cursor.lockState = CursorLockMode.Confined;
+            transform.LookAt(_inspectedObject);
         }
     }
 }

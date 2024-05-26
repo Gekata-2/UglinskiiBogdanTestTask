@@ -10,7 +10,7 @@ namespace UI
     public class MainMenu : MonoBehaviour
     {
         [SerializeField] private Button start, exit;
-
+        private bool _isActive;
         private void Start()
         {
             start.onClick.AddListener(OnStart);

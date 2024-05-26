@@ -37,6 +37,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""cab5d5e3-a54c-434d-848d-af65ec278eac"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""MouseMovement"",
                     ""type"": ""Value"",
                     ""id"": ""c3e0ab47-e5fd-4621-a7c5-712d6d030970"",
@@ -46,9 +55,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SideMenu"",
+                    ""name"": ""Inspect"",
                     ""type"": ""Button"",
-                    ""id"": ""5d92b064-ac8f-4b67-b0ca-22edf2be2a03"",
+                    ""id"": ""8d7f3511-46b5-4924-acd9-23f628cb2d48"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -146,7 +155,158 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c5b80e4e-7488-4dd1-a11b-cd4651a549e2"",
+                    ""id"": ""27fee122-e559-4e71-a44b-faa5bc55affb"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inspect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9331b2e-8715-4964-9f09-e0b74c41621f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Inspection"",
+            ""id"": ""35bdf918-68df-4d02-827c-0e51775cedba"",
+            ""actions"": [
+                {
+                    ""name"": ""Rotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""8d56fd32-ec89-42cf-bf8d-5a7f3b991a6a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""b70602b1-ac07-4ee1-9d7c-899afb8bbfd9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""1300b2ec-9e8b-4a62-98c9-396f0b6da1e1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Rotate"",
+                    ""id"": ""804cdec0-121c-4d82-b559-beffb501b232"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""30b56e1f-ff00-4574-b52e-b513361457ee"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""eafd0f87-08ef-4c0f-932b-f1bca82f31ef"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""6705a475-9fc1-442e-97db-bc416653147d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ef1071c4-38be-4086-8548-1836d0486f19"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9c34a13-7cc7-4229-97cb-677bd77c7471"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16321954-ae26-41f8-ba69-4474109d199a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""7095568b-6da9-498b-b9f2-f8ae570f2c1a"",
+            ""actions"": [
+                {
+                    ""name"": ""SideMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b9a8c3b-f2dc-498b-b84b-1537326bf169"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d37c5d84-4901-4c64-b47c-e487943fc6c3"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -163,8 +323,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // FreeMovement
         m_FreeMovement = asset.FindActionMap("FreeMovement", throwIfNotFound: true);
         m_FreeMovement_Movement = m_FreeMovement.FindAction("Movement", throwIfNotFound: true);
+        m_FreeMovement_Menu = m_FreeMovement.FindAction("Menu", throwIfNotFound: true);
         m_FreeMovement_MouseMovement = m_FreeMovement.FindAction("MouseMovement", throwIfNotFound: true);
-        m_FreeMovement_SideMenu = m_FreeMovement.FindAction("SideMenu", throwIfNotFound: true);
+        m_FreeMovement_Inspect = m_FreeMovement.FindAction("Inspect", throwIfNotFound: true);
+        // Inspection
+        m_Inspection = asset.FindActionMap("Inspection", throwIfNotFound: true);
+        m_Inspection_Rotation = m_Inspection.FindAction("Rotation", throwIfNotFound: true);
+        m_Inspection_Zoom = m_Inspection.FindAction("Zoom", throwIfNotFound: true);
+        m_Inspection_Cancel = m_Inspection.FindAction("Cancel", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_SideMenu = m_UI.FindAction("SideMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,15 +396,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_FreeMovement;
     private List<IFreeMovementActions> m_FreeMovementActionsCallbackInterfaces = new List<IFreeMovementActions>();
     private readonly InputAction m_FreeMovement_Movement;
+    private readonly InputAction m_FreeMovement_Menu;
     private readonly InputAction m_FreeMovement_MouseMovement;
-    private readonly InputAction m_FreeMovement_SideMenu;
+    private readonly InputAction m_FreeMovement_Inspect;
     public struct FreeMovementActions
     {
         private @PlayerInputActions m_Wrapper;
         public FreeMovementActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_FreeMovement_Movement;
+        public InputAction @Menu => m_Wrapper.m_FreeMovement_Menu;
         public InputAction @MouseMovement => m_Wrapper.m_FreeMovement_MouseMovement;
-        public InputAction @SideMenu => m_Wrapper.m_FreeMovement_SideMenu;
+        public InputAction @Inspect => m_Wrapper.m_FreeMovement_Inspect;
         public InputActionMap Get() { return m_Wrapper.m_FreeMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -248,12 +419,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
             @MouseMovement.started += instance.OnMouseMovement;
             @MouseMovement.performed += instance.OnMouseMovement;
             @MouseMovement.canceled += instance.OnMouseMovement;
-            @SideMenu.started += instance.OnSideMenu;
-            @SideMenu.performed += instance.OnSideMenu;
-            @SideMenu.canceled += instance.OnSideMenu;
+            @Inspect.started += instance.OnInspect;
+            @Inspect.performed += instance.OnInspect;
+            @Inspect.canceled += instance.OnInspect;
         }
 
         private void UnregisterCallbacks(IFreeMovementActions instance)
@@ -261,12 +435,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
             @MouseMovement.started -= instance.OnMouseMovement;
             @MouseMovement.performed -= instance.OnMouseMovement;
             @MouseMovement.canceled -= instance.OnMouseMovement;
-            @SideMenu.started -= instance.OnSideMenu;
-            @SideMenu.performed -= instance.OnSideMenu;
-            @SideMenu.canceled -= instance.OnSideMenu;
+            @Inspect.started -= instance.OnInspect;
+            @Inspect.performed -= instance.OnInspect;
+            @Inspect.canceled -= instance.OnInspect;
         }
 
         public void RemoveCallbacks(IFreeMovementActions instance)
@@ -284,10 +461,129 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public FreeMovementActions @FreeMovement => new FreeMovementActions(this);
+
+    // Inspection
+    private readonly InputActionMap m_Inspection;
+    private List<IInspectionActions> m_InspectionActionsCallbackInterfaces = new List<IInspectionActions>();
+    private readonly InputAction m_Inspection_Rotation;
+    private readonly InputAction m_Inspection_Zoom;
+    private readonly InputAction m_Inspection_Cancel;
+    public struct InspectionActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public InspectionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Rotation => m_Wrapper.m_Inspection_Rotation;
+        public InputAction @Zoom => m_Wrapper.m_Inspection_Zoom;
+        public InputAction @Cancel => m_Wrapper.m_Inspection_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_Inspection; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InspectionActions set) { return set.Get(); }
+        public void AddCallbacks(IInspectionActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InspectionActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InspectionActionsCallbackInterfaces.Add(instance);
+            @Rotation.started += instance.OnRotation;
+            @Rotation.performed += instance.OnRotation;
+            @Rotation.canceled += instance.OnRotation;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IInspectionActions instance)
+        {
+            @Rotation.started -= instance.OnRotation;
+            @Rotation.performed -= instance.OnRotation;
+            @Rotation.canceled -= instance.OnRotation;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IInspectionActions instance)
+        {
+            if (m_Wrapper.m_InspectionActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInspectionActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InspectionActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InspectionActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InspectionActions @Inspection => new InspectionActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_SideMenu;
+    public struct UIActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SideMenu => m_Wrapper.m_UI_SideMenu;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @SideMenu.started += instance.OnSideMenu;
+            @SideMenu.performed += instance.OnSideMenu;
+            @SideMenu.canceled += instance.OnSideMenu;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @SideMenu.started -= instance.OnSideMenu;
+            @SideMenu.performed -= instance.OnSideMenu;
+            @SideMenu.canceled -= instance.OnSideMenu;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IFreeMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
         void OnMouseMovement(InputAction.CallbackContext context);
+        void OnInspect(InputAction.CallbackContext context);
+    }
+    public interface IInspectionActions
+    {
+        void OnRotation(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
         void OnSideMenu(InputAction.CallbackContext context);
     }
 }

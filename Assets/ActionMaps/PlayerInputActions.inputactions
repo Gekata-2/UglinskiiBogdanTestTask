@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "cab5d5e3-a54c-434d-848d-af65ec278eac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "MouseMovement",
                     "type": "Value",
                     "id": "c3e0ab47-e5fd-4621-a7c5-712d6d030970",
@@ -24,9 +33,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "SideMenu",
+                    "name": "Inspect",
                     "type": "Button",
-                    "id": "5d92b064-ac8f-4b67-b0ca-22edf2be2a03",
+                    "id": "8d7f3511-46b5-4924-acd9-23f628cb2d48",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -124,7 +133,158 @@
                 },
                 {
                     "name": "",
-                    "id": "c5b80e4e-7488-4dd1-a11b-cd4651a549e2",
+                    "id": "27fee122-e559-4e71-a44b-faa5bc55affb",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inspect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9331b2e-8715-4964-9f09-e0b74c41621f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Inspection",
+            "id": "35bdf918-68df-4d02-827c-0e51775cedba",
+            "actions": [
+                {
+                    "name": "Rotation",
+                    "type": "Value",
+                    "id": "8d56fd32-ec89-42cf-bf8d-5a7f3b991a6a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "b70602b1-ac07-4ee1-9d7c-899afb8bbfd9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "1300b2ec-9e8b-4a62-98c9-396f0b6da1e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Rotate",
+                    "id": "804cdec0-121c-4d82-b559-beffb501b232",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "30b56e1f-ff00-4574-b52e-b513361457ee",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "eafd0f87-08ef-4c0f-932b-f1bca82f31ef",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "6705a475-9fc1-442e-97db-bc416653147d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "ef1071c4-38be-4086-8548-1836d0486f19",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b9c34a13-7cc7-4229-97cb-677bd77c7471",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "16321954-ae26-41f8-ba69-4474109d199a",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "7095568b-6da9-498b-b9f2-f8ae570f2c1a",
+            "actions": [
+                {
+                    "name": "SideMenu",
+                    "type": "Button",
+                    "id": "1b9a8c3b-f2dc-498b-b84b-1537326bf169",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d37c5d84-4901-4c64-b47c-e487943fc6c3",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
