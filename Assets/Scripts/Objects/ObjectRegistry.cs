@@ -13,10 +13,6 @@ namespace Objects
                 return false;
 
             _objects.Add(obj.name, obj);
-            foreach (var p in _objects)
-            {
-                Debug.Log($"{p.Key} : {p.Value}");
-            }
 
             return true;
         }
@@ -31,14 +27,11 @@ namespace Objects
 
         public bool TryUnregisterObject(string id)
         {
-            if (!_objects.ContainsKey(id)) return false;
+            if (!_objects.ContainsKey(id))
+                return false;
 
             _objects.Remove(id);
-            foreach (var p in _objects)
-            {
-                Debug.Log($"{p.Key} : {p.Value}");
-            }
-
+           
             return true;
         }
 
@@ -64,7 +57,6 @@ namespace Objects
             }
 
             obj = _objects[id];
-            _objects.Remove(id);
             return true;
         }
 

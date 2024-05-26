@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Objects
@@ -6,6 +8,8 @@ namespace Objects
     {
         public static ObjectsController Instance { get; private set; }
         private ObjectRegistry _registry;
+        public event Action<string> onObjectAdded;
+        public event Action<string> onObjectRemoved;
 
         public void Init()
         {
@@ -22,12 +26,59 @@ namespace Objects
 
         public void Add(InspectableObject obj)
         {
-            _registry.TryRegisterObject(obj);
+            if (_registry.TryRegisterObject(obj))
+            {
+                onObjectAdded?.Invoke(obj.name);
+            }
         }
 
         public void Remove(string id)
         {
-            _registry.TryUnregisterObject(id);
+            if (_registry.TryUnregisterObject(id))
+            {
+                onObjectRemoved?.Invoke(id);
+            }
+        }
+
+        public void ShowObjects(List<string> ids)
+        {
+            foreach (var id in ids)
+            {
+                if (_registry.TryGetObject(id, out var obj))
+                {
+                    obj.Show();
+                }
+            }
+        }
+
+
+        public void HideObjects(List<string> ids)
+        {
+            foreach (var id in ids)
+            {
+                if (_registry.TryGetObject(id, out var obj))
+                {
+                    obj.Hide();
+                }
+            }
+        }
+
+        public void SetAlpha(float alpha, List<string> ids)
+        {
+            alpha = Mathf.Clamp(alpha, 0, 1);
+         
+            foreach (var id in ids)
+            {
+                if (_registry.TryGetObject(id, out var obj))
+                {
+                    obj.Alpha = alpha;
+                }
+            }
+        }
+
+        public ObjectData GetInfo(string id)
+        {
+            return _registry.GetObject(id).GetData();
         }
     }
 }
