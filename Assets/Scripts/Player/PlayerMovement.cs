@@ -8,15 +8,23 @@ namespace Player
         [SerializeField] private float speed;
         [SerializeField] private Transform cameraView;
         private PlayerInput _input;
+        private MouseMovement _mouseMovement;
 
         private void Awake()
         {
             _input = GetComponent<PlayerInput>();
+            _mouseMovement = cameraView.GetComponent<MouseMovement>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
+            _mouseMovement.onHorizontalMove += OnMouseHorizontalMove;
+        }
+
+        private void OnMouseHorizontalMove(float val)
+        {
+            transform.Rotate(Vector3.up * val);
         }
 
         // Update is called once per frame
