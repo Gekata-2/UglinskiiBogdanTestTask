@@ -14,6 +14,9 @@ namespace Objects
         [SerializeField] private GameObject view;
         [SerializeField] private Collider interactZone;
 
+        private static int _n;
+        public event Action onDestroy;
+        public GameObject View => view;
         public float Alpha
         {
             get => view.GetComponent<MeshRenderer>().material.color.a;
@@ -41,12 +44,14 @@ namespace Objects
         // Start is called before the first frame update
         private void Start()
         {
+            name = $"Object {_n++}";
             ObjectsController.Instance.Add(this);
         }
 
         private void OnDestroy()
         {
             ObjectsController.Instance.Remove(name);
+            onDestroy?.Invoke();
         }
 
         public ObjectData GetData() => new() { Alpha = Alpha, Color = Color };

@@ -11,7 +11,7 @@ namespace UI
         [SerializeField] private Transform content;
         [SerializeField] private Toggle allToggle;
         [SerializeField] private Slider alphaSlider;
-        [SerializeField] private Button showButton;
+        [SerializeField] private Button showButton, destroyButton;
 
         [SerializeField] private GameObject objectUIPrefab;
 
@@ -32,6 +32,7 @@ namespace UI
             ObjectsController.Instance.onObjectRemoved += OnObjectRemoved;
 
             showButton.onClick.AddListener(OnShowClicked);
+            destroyButton.onClick.AddListener(OnDestroyObjectClicked);
             allToggle.onValueChanged.AddListener(OnAllToggleClicked);
             alphaSlider.onValueChanged.AddListener(OnAlphaSliderValueChanged);
         }
@@ -50,7 +51,25 @@ namespace UI
                 v.onToggle -= OnToggle;
         }
 
+        private void OnDestroyObjectClicked()
+        {
+            ObjectsController.Instance.DestroyObjects(_checkedObj);
+
+            foreach (var id in _checkedObj)
+                RemoveObjectView(id);
+
+            _checkedObj.Clear();
+            UpdateView();
+        }
+
         private void OnObjectRemoved(string id)
+        {
+            RemoveObjectView(id);
+            if (_checkedObj.Contains(id))
+                _checkedObj.Remove(id);
+        }
+
+        private void RemoveObjectView(string id)
         {
             ObjectUI viewUI = null;
 
@@ -68,9 +87,6 @@ namespace UI
 
             _views.Remove(viewUI);
             Destroy(viewUI.gameObject);
-
-            if (_checkedObj.Contains(id))
-                _checkedObj.Remove(id);
         }
 
         private void OnObjectAdded(string objId)
@@ -82,6 +98,7 @@ namespace UI
                 _views.Add(view);
                 view.onToggle += OnToggle;
             }
+            UpdateView();
         }
 
         private void OnShowClicked()
@@ -139,6 +156,9 @@ namespace UI
             {
                 view.UpdateView(ObjectsController.Instance.GetInfo(view.Id));
             }
+
+            allToggle.SetIsOnWithoutNotify(_checkedObj.Count >= _views.Count);
+            allToggle.SetIsOnWithoutNotify(_views.Count != 0);
         }
     }
 }

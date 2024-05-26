@@ -13,10 +13,11 @@ namespace Player
         [SerializeField] private SideMenu sideMenu;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private MouseMovement mouseMovement;
-      
+
         public event Action<Transform> OnObjectToInspectHit;
-       
         private PlayerInput _input;
+
+        private InspectableObject _inspectableObject;
 
         private enum State
         {
@@ -47,6 +48,20 @@ namespace Player
             quickMenu.onResume += OnResume;
         }
 
+        private void OnDestroy()
+        {
+            _input.onInspect -= OnInspect;
+            _input.onCancel -= OnCancel;
+            _input.onQuickMenuOpen -= OnQuickMenuOpen;
+
+            sideMenu.OnSideMenuSetActive -= OnSideMenuOpen;
+            quickMenu.onResume -= OnResume;
+            if (_inspectableObject != null)
+            {
+                _inspectableObject.onDestroy -= OnInspectableObjectDestroyed;
+            }
+        }
+
         private void SetGlobalState(State state)
         {
             _state = state;
@@ -70,35 +85,24 @@ namespace Player
             {
                 case State.Free:
                     if (isActive)
-                    {
                         SetMoveMouseState(MouseMovement.State.Locked,
                             CursorLockMode.Confined,
                             PlayerMovement.State.Locked);
-                    }
                     else
-                    {
-                        mouseMovement.SetState(MouseMovement.State.Free, CursorLockMode.Locked);
-                        playerMovement.SetState(PlayerMovement.State.Free);
                         SetMoveMouseState(MouseMovement.State.Free,
                             CursorLockMode.Locked,
                             PlayerMovement.State.Free);
-                    }
 
                     break;
                 case State.Inspect:
                     if (isActive)
-                    {
                         SetMoveMouseState(MouseMovement.State.Locked,
                             CursorLockMode.Confined,
                             PlayerMovement.State.Locked);
-                    }
                     else
-                    {
                         SetMoveMouseState(MouseMovement.State.LookAt,
                             CursorLockMode.Locked,
                             PlayerMovement.State.Inspect);
-                    }
-
                     break;
                 default:
                     break;
@@ -122,6 +126,9 @@ namespace Player
         private void OnCancel()
         {
             SetGlobalState(State.Free);
+            playerMovement.RemoveInspectableObject();
+            mouseMovement.RemoveInspectableObject();
+            RemoveInspectableObject();
             SetMoveMouseState(MouseMovement.State.Free,
                 CursorLockMode.Locked,
                 PlayerMovement.State.Free);
@@ -138,7 +145,8 @@ namespace Player
                 if (hit.transform.TryGetComponent<InspectableObject>(out var obj))
                 {
                     OnObjectToInspectHit?.Invoke(hit.transform);
-
+                    _inspectableObject = obj;
+                    obj.onDestroy += OnInspectableObjectDestroyed;
                     SetMoveMouseState(MouseMovement.State.LookAt,
                         CursorLockMode.Locked,
                         PlayerMovement.State.Inspect);
@@ -147,6 +155,19 @@ namespace Player
                 }
             }
         }
+
+        private void OnInspectableObjectDestroyed()
+        {
+            playerMovement.RemoveInspectableObject();
+            mouseMovement.RemoveInspectableObject();
+            RemoveInspectableObject();
+            SetMoveMouseState(MouseMovement.State.Free,
+                CursorLockMode.Locked,
+                PlayerMovement.State.Free);
+            SetGlobalState(State.Free);
+        }
+
+        private void RemoveInspectableObject() => _inspectableObject = null;
 
         private void SetMoveMouseState(MouseMovement.State mouseState, CursorLockMode cursorLockMode,
             PlayerMovement.State moveState)

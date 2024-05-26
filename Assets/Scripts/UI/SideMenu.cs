@@ -1,7 +1,6 @@
 using System;
-using Player;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using PlayerInput = Player.PlayerInput;
 
 namespace UI
@@ -10,13 +9,20 @@ namespace UI
     {
         [SerializeField] private GameObject menu;
         [SerializeField] private PlayerInput playerInput;
+        [SerializeField] private Button spawnObject;
+        public event Action onSpawnObject;
         public event Action<bool> OnSideMenuSetActive;
         private bool _isActive;
-        public bool IsActive => _isActive;
 
         private void Start()
         {
             playerInput.onSideMenuOpen += OnSideMenu;
+            spawnObject.onClick.AddListener(OnSpawnObject);
+        }
+
+        private void OnSpawnObject()
+        {
+            onSpawnObject?.Invoke();
         }
 
         private void OnSideMenu()

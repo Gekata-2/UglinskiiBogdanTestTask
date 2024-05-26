@@ -11,14 +11,24 @@ namespace UI
         [SerializeField] private Image isVisible;
         [SerializeField] private Slider alphaView;
         [SerializeField] private Image colorView;
-        private string _id;
-        
         public Action<bool, string> onToggle;
+
+        private string _id;
         public string Id => _id;
+
         public void Init(string id)
         {
             _id = id;
+        }
+
+        private void OnEnable()
+        {
             toggle.onValueChanged.AddListener(OnToggle);
+        }
+
+        private void OnDisable()
+        {
+            toggle.onValueChanged.RemoveAllListeners();
         }
 
         private void OnToggle(bool isToggled)
@@ -36,13 +46,6 @@ namespace UI
             alphaView.value = data.Alpha;
             colorView.color = data.Color;
             colorView.color = new Color(colorView.color.r, colorView.color.b, colorView.color.g, 1f);
-        }
-
-     
-
-        private void OnDisable()
-        {
-            toggle.onValueChanged.RemoveAllListeners();
         }
     }
 }

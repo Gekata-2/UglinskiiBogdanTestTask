@@ -31,7 +31,6 @@ namespace Objects
                 return false;
 
             _objects.Remove(id);
-           
             return true;
         }
 

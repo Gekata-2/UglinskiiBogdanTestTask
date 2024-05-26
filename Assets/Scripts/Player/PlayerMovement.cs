@@ -36,32 +36,34 @@ namespace Player
             _core.OnObjectToInspectHit += OnObjectToInspect;
         }
 
+        private void OnDestroy()
+        {
+            _mouseMovement.OnHorizontalMove -= OnMouseHorizontalMove;
+            _core.OnObjectToInspectHit -= OnObjectToInspect;
+        }
+
+        public void RemoveInspectableObject()
+        {
+            ResetRot();
+            _inspectedObject = null;
+        }
+
         public void SetState(State state)
         {
             _state = state;
-            switch (state)
-            {
-                case State.Free:
-                    if (_inspectedObject != null)
-                    {
-                        ResetRot();
-                        _inspectedObject = null;
-                    }
-
-                    break;
-                case State.Inspect:
-                    break;
-                case State.Locked:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
         }
 
         private void ResetRot()
         {
-            Vector3 dir = _inspectedObject.position - transform.position;
-            transform.forward = new Vector3(dir.x, 0, dir.z);
+            if (_inspectedObject == null)
+            {
+                transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
+            }
+            else
+            {
+                Vector3 dir = _inspectedObject.position - transform.position;
+                transform.forward = new Vector3(dir.x, 0, dir.z);
+            }
         }
 
         private void OnObjectToInspect(Transform obj)
@@ -102,22 +104,26 @@ namespace Player
             transform.Translate(posDelta * (speed * Time.deltaTime), Space.World);
         }
 
+
         private void MoveInspect()
         {
+            if (_inspectedObject == null)
+                return;
+
             Vector2 input = _input.RotateAroundObjInput.normalized;
 
             var inspectedObjectPosition = _inspectedObject.position;
-            transform.RotateAround(inspectedObjectPosition, _inspectedObject.up,
+            transform.RotateAround(inspectedObjectPosition, Vector3.up,
                 rotationSpeed * input.x * Time.deltaTime);
             transform.RotateAround(inspectedObjectPosition, -transform.right,
                 rotationSpeed * input.y * Time.deltaTime);
 
             float scroll = _input.ScrollInput();
 
-
             Vector3 dir = inspectedObjectPosition - cameraView.position;
             transform.Translate(
-                dir.normalized * (scroll * dir.magnitude * scrollSpeed * Time.deltaTime),
+                dir.normalized *
+                (scroll * dir.magnitude * scrollSpeed * Time.deltaTime),
                 Space.World);
         }
     }

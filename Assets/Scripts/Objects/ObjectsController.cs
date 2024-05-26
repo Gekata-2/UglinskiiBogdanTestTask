@@ -66,7 +66,7 @@ namespace Objects
         public void SetAlpha(float alpha, List<string> ids)
         {
             alpha = Mathf.Clamp(alpha, 0, 1);
-         
+
             foreach (var id in ids)
             {
                 if (_registry.TryGetObject(id, out var obj))
@@ -79,6 +79,17 @@ namespace Objects
         public ObjectData GetInfo(string id)
         {
             return _registry.GetObject(id).GetData();
+        }
+
+        public void DestroyObjects(List<string> ids)
+        {
+            List<InspectableObject> objects = _registry.GetObject(ids);
+            _registry.UnregisterObjects(ids);
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                Destroy(objects[i].gameObject);
+            }
         }
     }
 }

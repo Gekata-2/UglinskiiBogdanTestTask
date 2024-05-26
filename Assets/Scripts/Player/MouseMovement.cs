@@ -13,6 +13,7 @@ namespace Player
         private float _xRotation;
         private Transform _inspectedObject;
 
+        public void RemoveInspectableObject() => _inspectedObject = null;
         private void Start()
         {
             core.OnObjectToInspectHit += OnObjectToInspect;
@@ -35,8 +36,10 @@ namespace Player
         public void SetState(State state, CursorLockMode lockMode)
         {
             _state = state;
-
             Cursor.lockState = lockMode;
+            
+            if (state == State.Free) 
+                _inspectedObject = null;
         }
 
         private void Update()
@@ -73,6 +76,9 @@ namespace Player
 
         private void LookAt()
         {
+            if (_inspectedObject == null) 
+               return;
+
             transform.LookAt(_inspectedObject);
         }
     }
