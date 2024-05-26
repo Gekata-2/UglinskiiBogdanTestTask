@@ -19,7 +19,7 @@ namespace Player
         // Start is called before the first frame update
         void Start()
         {
-            _mouseMovement.onHorizontalMove += OnMouseHorizontalMove;
+            _mouseMovement.OnHorizontalMove += OnMouseHorizontalMove;
         }
 
         private void OnMouseHorizontalMove(float val)

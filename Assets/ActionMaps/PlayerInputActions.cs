@@ -44,6 +44,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SideMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d92b064-ac8f-4b67-b0ca-22edf2be2a03"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MouseMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5b80e4e-7488-4dd1-a11b-cd4651a549e2"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SideMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,6 +164,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_FreeMovement = asset.FindActionMap("FreeMovement", throwIfNotFound: true);
         m_FreeMovement_Movement = m_FreeMovement.FindAction("Movement", throwIfNotFound: true);
         m_FreeMovement_MouseMovement = m_FreeMovement.FindAction("MouseMovement", throwIfNotFound: true);
+        m_FreeMovement_SideMenu = m_FreeMovement.FindAction("SideMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,12 +228,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IFreeMovementActions> m_FreeMovementActionsCallbackInterfaces = new List<IFreeMovementActions>();
     private readonly InputAction m_FreeMovement_Movement;
     private readonly InputAction m_FreeMovement_MouseMovement;
+    private readonly InputAction m_FreeMovement_SideMenu;
     public struct FreeMovementActions
     {
         private @PlayerInputActions m_Wrapper;
         public FreeMovementActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_FreeMovement_Movement;
         public InputAction @MouseMovement => m_Wrapper.m_FreeMovement_MouseMovement;
+        public InputAction @SideMenu => m_Wrapper.m_FreeMovement_SideMenu;
         public InputActionMap Get() { return m_Wrapper.m_FreeMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -228,6 +251,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseMovement.started += instance.OnMouseMovement;
             @MouseMovement.performed += instance.OnMouseMovement;
             @MouseMovement.canceled += instance.OnMouseMovement;
+            @SideMenu.started += instance.OnSideMenu;
+            @SideMenu.performed += instance.OnSideMenu;
+            @SideMenu.canceled += instance.OnSideMenu;
         }
 
         private void UnregisterCallbacks(IFreeMovementActions instance)
@@ -238,6 +264,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseMovement.started -= instance.OnMouseMovement;
             @MouseMovement.performed -= instance.OnMouseMovement;
             @MouseMovement.canceled -= instance.OnMouseMovement;
+            @SideMenu.started -= instance.OnSideMenu;
+            @SideMenu.performed -= instance.OnSideMenu;
+            @SideMenu.canceled -= instance.OnSideMenu;
         }
 
         public void RemoveCallbacks(IFreeMovementActions instance)
@@ -259,5 +288,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnMouseMovement(InputAction.CallbackContext context);
+        void OnSideMenu(InputAction.CallbackContext context);
     }
 }
