@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Objects
@@ -16,9 +15,7 @@ namespace Objects
         [SerializeField] private Collider interactZone;
 
         private static int _n;
-        public event Action onDestroy;
-        public GameObject View => view;
-
+        
         public float Alpha
         {
             get => view.GetComponent<MeshRenderer>().material.color.a;
@@ -54,7 +51,6 @@ namespace Objects
         private void OnDestroy()
         {
             ObjectsController.Instance.Remove(name);
-            //onDestroy?.Invoke();
         }
 
         public ObjectData GetData() => new() { Alpha = Alpha, 
