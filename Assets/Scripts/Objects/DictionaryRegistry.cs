@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Objects
 {
-    public class ObjectRegistry
+    public class DictionaryRegistry : IObjectRegistry
     {
         private readonly Dictionary<string, InspectableObject> _objects = new();
 
@@ -17,13 +16,6 @@ namespace Objects
             return true;
         }
 
-        public void RegisterObjects(List<InspectableObject> objects)
-        {
-            foreach (var obj in objects)
-            {
-                TryRegisterObject(obj);
-            }
-        }
 
         public bool TryUnregisterObject(string id)
         {
@@ -34,13 +26,6 @@ namespace Objects
             return true;
         }
 
-        public void UnregisterObjects(List<string> ids)
-        {
-            foreach (var id in ids)
-            {
-                TryUnregisterObject(id);
-            }
-        }
 
         public InspectableObject GetObject(string id)
         {

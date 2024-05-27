@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4081686318797409504
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 181288851951924658, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 181288851951924685, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1172f28447baee3479e4d5498ea0b13e, type: 2}
+    - target: {fileID: 181288852029455329, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_Name
+      value: InspectableObjectSphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455332, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: interactZone
+      value: 
+      objectReference: {fileID: 6000998208345558855}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181288852029455334, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8719000291200804320, guid: db35d5e7036af874a80e1a7934bf12df,
+        type: 3}
+      propertyPath: views.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3099716769087571548, guid: db35d5e7036af874a80e1a7934bf12df, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: db35d5e7036af874a80e1a7934bf12df, type: 3}
+--- !u!1 &4188630592319518465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 181288852029455329, guid: db35d5e7036af874a80e1a7934bf12df,
+    type: 3}
+  m_PrefabInstance: {fileID: 4081686318797409504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &6000998208345558855
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4188630592319518465}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

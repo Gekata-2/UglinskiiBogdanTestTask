@@ -7,19 +7,19 @@ namespace Objects
     public class ObjectsController : MonoBehaviour
     {
         public static ObjectsController Instance { get; private set; }
-        private ObjectRegistry _registry;
-        private ObjectSpawner _objectSpawner;
+        private IObjectRegistry _registry;
+        private IObjectSpawner _objectSpawner;
         public event Action<string> onObjectAdded;
         public event Action<string> onObjectRemoved;
         
 
-        public void Init()
+        public void Init(IObjectSpawner objectSpawner,IObjectRegistry objectRegistry)
         {
             if (Instance == null)
             {
                 Instance = this;
-                _objectSpawner = GetComponent<ObjectSpawner>();
-                _registry = new ObjectRegistry();
+                _objectSpawner = objectSpawner;
+                _registry = objectRegistry;
             }
             else
             {

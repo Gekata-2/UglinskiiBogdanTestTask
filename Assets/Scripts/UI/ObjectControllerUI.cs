@@ -187,6 +187,7 @@ namespace UI
             foreach (var view in _views)
             {
                 view.UpdateView(ObjectsController.Instance.GetInfo(view.Id));
+               
             }
 
             if (_checkedObj.Count < _views.Count || _views.Count == 0)

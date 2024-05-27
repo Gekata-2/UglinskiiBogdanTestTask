@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace Objects
 {
-    public class ObjectSpawner : MonoBehaviour
+    public class ObjectSpawner : MonoBehaviour, IObjectSpawner
     {
         [SerializeField] private Vector2 boundsX;
         [SerializeField] private Vector2 boundsY;
@@ -35,7 +35,7 @@ namespace Objects
 
         public void SpawnObject()
         {
-            GameObject go = Instantiate(
+            Instantiate(
                 GetRandomGameObject(),
                 GetRandomPosition(),
                 GetRandomRotation(),

@@ -57,12 +57,8 @@ namespace Player
 
             sideMenu.OnSideMenuSetActive -= OnSideMenuOpen;
             quickMenu.onResume -= OnResume;
+            
             ObjectsController.Instance.onObjectRemoved -= OnObjectRemovedFromRegistry;
-
-            // if (_inspectableObject != null)
-            // {
-            //     _inspectableObject.onDestroy -= OnInspectableObjectDestroyed;
-            // }
         }
 
         private void SetGlobalState(State state)
@@ -122,15 +118,11 @@ namespace Player
 
         private void OnCancelInspect()
         {
-            if (sideMenu.IsActive)
-            {
-                RemoveInspectableObject();
-                SetGlobalState(State.Free);
-                return;
-            }
-
-
-            SetFreeState();
+            RemoveInspectableObject();
+            SetGlobalState(State.Free);
+            
+            if (!sideMenu.IsActive) 
+                SetFreeState();
         }
 
 
@@ -139,13 +131,12 @@ namespace Player
             if (Physics.Raycast(cameraView.transform.position,
                     cameraView.transform.forward,
                     out RaycastHit hit,
-                    1111f, interactableLayers))
+                    100f, interactableLayers))
             {
                 if (hit.transform.TryGetComponent<InspectableObject>(out var obj))
                 {
                     OnObjectToInspectHit?.Invoke(hit.transform);
                     _inspectableObject = obj;
-                    // obj.onDestroy += OnInspectableObjectDestroyed;
                     SetInspectState();
                     SetGlobalState(State.Inspect);
                 }
@@ -156,7 +147,7 @@ namespace Player
         {
             if (_inspectableObject == null)
                 return;
-            
+
             if (_inspectableObject.name == objName)
                 OnInspectableObjectDestroyed();
         }

@@ -15,33 +15,19 @@ namespace Objects
         [SerializeField] private Collider interactZone;
 
         private static int _n;
-        
+
         public float Alpha
         {
-            get => view.GetComponent<MeshRenderer>().material.color.a;
-            set
-            {
-                Renderer rendererView = view.GetComponent<MeshRenderer>();
-                var material = rendererView.material;
-                material.color = new Color(material.color.r, material.color.g,
-                    material.color.b, value);
-            }
+            get => view.GetComponent<ObjectView>().Alpha;
+            set => view.GetComponent<ObjectView>().Alpha = value;
         }
 
         public Color Color
         {
-            get => view.GetComponent<MeshRenderer>().material.color;
-            set
-            {
-                Renderer rendererView = view.GetComponent<MeshRenderer>();
-                value.a = Alpha;
-                var material = rendererView.material;
-                material.color = value;
-            }
+            get => view.GetComponent<ObjectView>().Color;
+            set => view.GetComponent<ObjectView>().Color = value;
         }
-
-
-        // Start is called before the first frame update
+        
         private void Start()
         {
             name = $"Object {_n++}";
@@ -53,9 +39,12 @@ namespace Objects
             ObjectsController.Instance.Remove(name);
         }
 
-        public ObjectData GetData() => new() { Alpha = Alpha, 
-            Color = Color, 
-            IsVisible = view.activeSelf };
+        public ObjectData GetData() => new()
+        {
+            Alpha = Alpha,
+            Color = Color,
+            IsVisible = view.activeSelf
+        };
 
         public void Show()
         {
