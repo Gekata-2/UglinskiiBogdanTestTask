@@ -12,13 +12,7 @@ namespace Objects
         [SerializeField] private Vector2 boundsY;
         [SerializeField] private Vector2 boundsZ;
         [SerializeField] private List<GameObject> prefabs;
-        [SerializeField] private SideMenu sideMenu;
-
-        private void Start()
-        {
-            sideMenu.onSpawnObject += SpawnObject;
-        }
-
+        
         private Vector3 GetRandomPosition()
         {
             Vector3 pos;

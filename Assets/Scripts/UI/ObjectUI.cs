@@ -8,7 +8,9 @@ namespace UI
     public class ObjectUI : MonoBehaviour
     {
         [SerializeField] private Toggle toggle;
-        [SerializeField] private Image isVisible;
+        [SerializeField] private Image isVisibleImage;
+        [SerializeField] private Sprite isVisibleSprite, isInvisibleSprite;
+        [SerializeField] private Color isVisibleColor, isInvisibleColor;
         [SerializeField] private Slider alphaView;
         [SerializeField] private Image colorView;
         public Action<bool, string> onToggle;
@@ -44,8 +46,22 @@ namespace UI
         public void UpdateView(ObjectData data)
         {
             alphaView.value = data.Alpha;
-            colorView.color = data.Color;
-            colorView.color = new Color(colorView.color.r, colorView.color.b, colorView.color.g, 1f);
+            colorView.color = new Color(data.Color.r, data.Color.g, data.Color.b, 1f);
+            SetVisibility(data.IsVisible);
+        }
+
+        private void SetVisibility(bool isVisible)
+        {
+            if (isVisible)
+            {
+                isVisibleImage.sprite = isVisibleSprite;
+                isVisibleImage.color = isVisibleColor;
+            }
+            else
+            {
+                isVisibleImage.sprite = isInvisibleSprite;
+                isVisibleImage.color = isInvisibleColor;
+            }
         }
     }
 }

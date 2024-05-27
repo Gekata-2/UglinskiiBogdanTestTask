@@ -9,21 +9,15 @@ namespace UI
     {
         [SerializeField] private GameObject menu;
         [SerializeField] private PlayerInput playerInput;
-        [SerializeField] private Button spawnObject;
-        public event Action onSpawnObject;
+        
         public event Action<bool> OnSideMenuSetActive;
         private bool _isActive;
 
         private void Start()
         {
             playerInput.onSideMenuOpen += OnSideMenu;
-            spawnObject.onClick.AddListener(OnSpawnObject);
         }
 
-        private void OnSpawnObject()
-        {
-            onSpawnObject?.Invoke();
-        }
 
         private void OnSideMenu()
         {

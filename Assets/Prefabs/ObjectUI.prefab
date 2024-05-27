@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 1715739440}
   - component: {fileID: 1715739439}
   m_Layer: 5
-  m_Name: IsVisable
+  m_Name: IsVisible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -838,6 +838,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 1795061562}
-  isVisible: {fileID: 1715739439}
+  isVisibleImage: {fileID: 1715739439}
+  isVisibleSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  isInvisibleSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  isVisibleColor: {r: 1, g: 1, b: 1, a: 1}
+  isInvisibleColor: {r: 0.5924529, g: 0.5924529, b: 0.5924529, a: 1}
   alphaView: {fileID: 1744112769}
   colorView: {fileID: 1617606199}

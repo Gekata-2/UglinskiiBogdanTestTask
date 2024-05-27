@@ -11,8 +11,10 @@ namespace UI
         [SerializeField] private Transform content;
         [SerializeField] private Toggle allToggle;
         [SerializeField] private Slider alphaSlider;
-        [SerializeField] private Button showButton, destroyButton;
-
+        [SerializeField] private Sprite showModeSprite, hideModeSprite;
+        [SerializeField] private Color showModeColor, hideModeColor;
+        [SerializeField] private Button showButton, destroyButton, spawnObjectButton;
+        [SerializeField] private ColorPicker colorPicker;
         [SerializeField] private GameObject objectUIPrefab;
 
         private List<ObjectUI> _views = new();
@@ -24,7 +26,7 @@ namespace UI
             Hide
         }
 
-        private EShowMode _showMode = EShowMode.Hide;
+        private EShowMode _showMode;
 
         public void Init()
         {
@@ -33,8 +35,12 @@ namespace UI
 
             showButton.onClick.AddListener(OnShowClicked);
             destroyButton.onClick.AddListener(OnDestroyObjectClicked);
+            spawnObjectButton.onClick.AddListener(OnSpawnObjectClicked);
             allToggle.onValueChanged.AddListener(OnAllToggleClicked);
             alphaSlider.onValueChanged.AddListener(OnAlphaSliderValueChanged);
+            colorPicker.onColorChanged += OnColorChanged;
+            UpdateView();
+            SetHideMode();
         }
 
 
@@ -49,6 +55,17 @@ namespace UI
 
             foreach (var v in _views)
                 v.onToggle -= OnToggle;
+        }
+
+        private void OnSpawnObjectClicked()
+        {
+            ObjectsController.Instance.SpawnObject();
+        }
+
+        private void OnColorChanged(Color color)
+        {
+            ObjectsController.Instance.SetColor(color, _checkedObj);
+            UpdateView();
         }
 
         private void OnDestroyObjectClicked()
@@ -98,6 +115,7 @@ namespace UI
                 _views.Add(view);
                 view.onToggle += OnToggle;
             }
+
             UpdateView();
         }
 
@@ -107,17 +125,32 @@ namespace UI
             {
                 case EShowMode.Show:
                     ObjectsController.Instance.ShowObjects(_checkedObj);
-                    _showMode = EShowMode.Hide;
+                    SetHideMode();
+
                     break;
                 case EShowMode.Hide:
                     ObjectsController.Instance.HideObjects(_checkedObj);
-                    _showMode = EShowMode.Show;
+                    SetShowMode();
                     break;
                 default:
                     break;
             }
 
             UpdateView();
+        }
+
+        private void SetHideMode()
+        {
+            _showMode = EShowMode.Hide;
+            showButton.image.sprite = hideModeSprite;
+            showButton.image.color = hideModeColor;
+        }
+
+        private void SetShowMode()
+        {
+            _showMode = EShowMode.Show;
+            showButton.image.sprite = showModeSprite;
+            showButton.image.color = showModeColor;
         }
 
         private void OnAlphaSliderValueChanged(float val)
@@ -157,8 +190,10 @@ namespace UI
                 view.UpdateView(ObjectsController.Instance.GetInfo(view.Id));
             }
 
-            allToggle.SetIsOnWithoutNotify(_checkedObj.Count >= _views.Count);
-            allToggle.SetIsOnWithoutNotify(_views.Count != 0);
+            if (_checkedObj.Count < _views.Count || _views.Count == 0)
+                allToggle.SetIsOnWithoutNotify(false);
+            else
+                allToggle.SetIsOnWithoutNotify(true);
         }
     }
 }

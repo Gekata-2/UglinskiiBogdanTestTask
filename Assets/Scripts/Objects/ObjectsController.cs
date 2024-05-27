@@ -8,6 +8,7 @@ namespace Objects
     {
         public static ObjectsController Instance { get; private set; }
         private ObjectRegistry _registry;
+        private ObjectSpawner _objectSpawner;
         public event Action<string> onObjectAdded;
         public event Action<string> onObjectRemoved;
 
@@ -16,6 +17,7 @@ namespace Objects
             if (Instance == null)
             {
                 Instance = this;
+                _objectSpawner = GetComponent<ObjectSpawner>();
                 _registry = new ObjectRegistry();
             }
             else
@@ -76,9 +78,25 @@ namespace Objects
             }
         }
 
+        public void SetColor(Color color, List<string> ids)
+        {
+            foreach (var id in ids)
+            {
+                if (_registry.TryGetObject(id, out var obj))
+                {
+                    obj.Color = color;
+                }
+            }
+        }
+
         public ObjectData GetInfo(string id)
         {
             return _registry.GetObject(id).GetData();
+        }
+
+        public void SpawnObject()
+        {
+            _objectSpawner.SpawnObject();
         }
 
         public void DestroyObjects(List<string> ids)

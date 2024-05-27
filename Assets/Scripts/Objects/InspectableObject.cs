@@ -7,6 +7,7 @@ namespace Objects
     {
         public float Alpha;
         public Color Color;
+        public bool IsVisible;
     }
 
     public class InspectableObject : MonoBehaviour
@@ -17,6 +18,7 @@ namespace Objects
         private static int _n;
         public event Action onDestroy;
         public GameObject View => view;
+
         public float Alpha
         {
             get => view.GetComponent<MeshRenderer>().material.color.a;
@@ -35,6 +37,7 @@ namespace Objects
             set
             {
                 Renderer rendererView = view.GetComponent<MeshRenderer>();
+                value.a = Alpha;
                 var material = rendererView.material;
                 material.color = value;
             }
@@ -54,7 +57,9 @@ namespace Objects
             onDestroy?.Invoke();
         }
 
-        public ObjectData GetData() => new() { Alpha = Alpha, Color = Color };
+        public ObjectData GetData() => new() { Alpha = Alpha, 
+            Color = Color, 
+            IsVisible = view.activeSelf };
 
         public void Show()
         {
