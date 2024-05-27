@@ -14,8 +14,6 @@ namespace Objects
         [SerializeField] private GameObject view;
         [SerializeField] private Collider interactZone;
 
-        private static int _n;
-
         public float Alpha
         {
             get => view.GetComponent<ObjectView>().Alpha;
@@ -27,10 +25,12 @@ namespace Objects
             get => view.GetComponent<ObjectView>().Color;
             set => view.GetComponent<ObjectView>().Color = value;
         }
-        
+
+        private static int _objectCount;
+
         private void Start()
         {
-            name = $"Object {_n++}";
+            name = $"Object {_objectCount++}";
             ObjectsController.Instance.Add(this);
         }
 

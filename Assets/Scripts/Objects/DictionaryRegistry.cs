@@ -47,13 +47,10 @@ namespace Objects
         public List<InspectableObject> GetObject(List<string> ids)
         {
             List<InspectableObject> objects = new List<InspectableObject>();
+            
             foreach (var id in ids)
-            {
                 if (TryGetObject(id, out InspectableObject obj))
-                {
                     objects.Add(obj);
-                }
-            }
 
             return objects;
         }
@@ -61,10 +58,9 @@ namespace Objects
         public List<InspectableObject> GetAll()
         {
             List<InspectableObject> objects = new List<InspectableObject>();
-            foreach (var pair in _objects)
-            {
+            
+            foreach (var pair in _objects) 
                 objects.Add(pair.Value);
-            }
 
             return objects;
         }

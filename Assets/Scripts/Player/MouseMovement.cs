@@ -9,20 +9,6 @@ namespace Player
         [SerializeField] private float ySensitivity;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private PlayerCore core;
-        public event Action<float> OnHorizontalMove;
-        private float _xRotation;
-        private Transform _inspectedObject;
-
-        public void RemoveInspectableObject() => _inspectedObject = null;
-        private void Start()
-        {
-            core.OnObjectToInspectHit += OnObjectToInspect;
-        }
-
-        private void OnObjectToInspect(Transform obj)
-        {
-            _inspectedObject = obj;
-        }
 
         public enum State
         {
@@ -31,15 +17,17 @@ namespace Player
             Locked
         }
 
+        public event Action<float> OnHorizontalMove;
+
         private State _state;
 
-        public void SetState(State state, CursorLockMode lockMode)
+        private float _xRotation;
+        private Transform _inspectedObject;
+
+
+        private void Start()
         {
-            _state = state;
-            Cursor.lockState = lockMode;
-            
-            if (state == State.Free) 
-                _inspectedObject = null;
+            core.OnObjectToInspectHit += OnObjectToInspect;
         }
 
         private void Update()
@@ -56,6 +44,16 @@ namespace Player
                 default:
                     break;
             }
+        }
+
+        private void OnDestroy()
+        {
+            core.OnObjectToInspectHit -= OnObjectToInspect;
+        }
+
+        private void OnObjectToInspect(Transform obj)
+        {
+            _inspectedObject = obj;
         }
 
         private void MoveFree()
@@ -76,10 +74,21 @@ namespace Player
 
         private void LookAt()
         {
-            if (_inspectedObject == null) 
-               return;
+            if (_inspectedObject == null)
+                return;
 
             transform.LookAt(_inspectedObject);
+        }
+
+        public void RemoveInspectableObject() => _inspectedObject = null;
+
+        public void SetState(State state, CursorLockMode lockMode)
+        {
+            _state = state;
+            Cursor.lockState = lockMode;
+
+            if (state == State.Free)
+                _inspectedObject = null;
         }
     }
 }

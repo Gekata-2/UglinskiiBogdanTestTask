@@ -8,16 +8,13 @@ namespace UI
     public class ObjectControllerUI : MonoBehaviour
     {
         [SerializeField] private Transform content;
+        [SerializeField] private GameObject objectUIPrefab;
         [SerializeField] private Toggle allToggle;
         [SerializeField] private Slider alphaSlider;
-        [SerializeField] private Sprite showModeSprite, hideModeSprite;
-        [SerializeField] private Color showModeColor, hideModeColor;
         [SerializeField] private Button showButton, destroyButton, spawnObjectButton;
         [SerializeField] private ColorPicker colorPicker;
-        [SerializeField] private GameObject objectUIPrefab;
-
-        private List<ObjectUI> _views = new();
-        private List<string> _checkedObj = new();
+        [SerializeField] private Sprite showModeSprite, hideModeSprite;
+        [SerializeField] private Color showModeColor, hideModeColor;
 
         enum EShowMode
         {
@@ -25,6 +22,8 @@ namespace UI
             Hide
         }
 
+        private List<ObjectUI> _views = new();
+        private List<string> _checkedObj = new();
         private EShowMode _showMode;
 
         public void Init()
@@ -33,11 +32,12 @@ namespace UI
             ObjectsController.Instance.onObjectRemoved += OnObjectRemoved;
 
             showButton.onClick.AddListener(OnShowClicked);
-            destroyButton.onClick.AddListener(OnDestroyObjectClicked);
-            spawnObjectButton.onClick.AddListener(OnSpawnObjectClicked);
             allToggle.onValueChanged.AddListener(OnAllToggleClicked);
             alphaSlider.onValueChanged.AddListener(OnAlphaSliderValueChanged);
+            destroyButton.onClick.AddListener(OnDestroyObjectClicked);
+            spawnObjectButton.onClick.AddListener(OnSpawnObjectClicked);
             colorPicker.onColorChanged += OnColorChanged;
+
             UpdateView();
             SetHideMode();
         }
@@ -51,6 +51,9 @@ namespace UI
             showButton.onClick.RemoveAllListeners();
             allToggle.onValueChanged.RemoveAllListeners();
             alphaSlider.onValueChanged.RemoveAllListeners();
+            destroyButton.onClick.RemoveAllListeners();
+            spawnObjectButton.onClick.RemoveAllListeners();
+            colorPicker.onColorChanged -= OnColorChanged;
 
             foreach (var v in _views)
                 v.onToggle -= OnToggle;
@@ -81,6 +84,7 @@ namespace UI
         private void OnObjectRemoved(string id)
         {
             RemoveObjectView(id);
+            
             if (_checkedObj.Contains(id))
                 _checkedObj.Remove(id);
         }
@@ -108,6 +112,7 @@ namespace UI
         private void OnObjectAdded(string objId)
         {
             GameObject go = Instantiate(objectUIPrefab, content);
+            
             if (go.TryGetComponent(out ObjectUI view))
             {
                 view.Init(objId);
@@ -125,7 +130,6 @@ namespace UI
                 case EShowMode.Show:
                     ObjectsController.Instance.ShowObjects(_checkedObj);
                     SetHideMode();
-
                     break;
                 case EShowMode.Hide:
                     ObjectsController.Instance.HideObjects(_checkedObj);
@@ -160,10 +164,8 @@ namespace UI
 
         private void OnAllToggleClicked(bool isToggle)
         {
-            foreach (var view in _views)
-            {
+            foreach (var view in _views) 
                 view.SetToggle(isToggle);
-            }
         }
 
 
@@ -184,11 +186,8 @@ namespace UI
 
         private void UpdateView()
         {
-            foreach (var view in _views)
-            {
+            foreach (var view in _views) 
                 view.UpdateView(ObjectsController.Instance.GetInfo(view.Id));
-               
-            }
 
             if (_checkedObj.Count < _views.Count || _views.Count == 0)
                 allToggle.SetIsOnWithoutNotify(false);

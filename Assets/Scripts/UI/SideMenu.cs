@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using PlayerInput = Player.PlayerInput;
 
 namespace UI
@@ -11,25 +10,20 @@ namespace UI
         [SerializeField] private PlayerInput playerInput;
 
         public event Action<bool> OnSideMenuSetActive;
+
         private bool _isActive;
-        public bool IsActive => _isActive;
 
         private void Start()
         {
             playerInput.onSideMenuOpen += OnSideMenu;
         }
 
-        public void Show()
+        private void OnDestroy()
         {
-            _isActive = true;
-            menu.SetActive(true);
+            playerInput.onSideMenuOpen -= OnSideMenu;
         }
 
-        public void Hide()
-        {
-            _isActive = false;
-            menu.SetActive(false);
-        }
+        public bool IsActive => _isActive;
 
         private void OnSideMenu()
         {
@@ -44,6 +38,18 @@ namespace UI
             }
 
             OnSideMenuSetActive?.Invoke(_isActive);
+        }
+
+        private void Show()
+        {
+            _isActive = true;
+            menu.SetActive(true);
+        }
+
+        private void Hide()
+        {
+            _isActive = false;
+            menu.SetActive(false);
         }
     }
 }

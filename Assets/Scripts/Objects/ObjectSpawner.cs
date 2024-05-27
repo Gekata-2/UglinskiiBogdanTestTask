@@ -11,6 +11,15 @@ namespace Objects
         [SerializeField] private Vector2 boundsZ;
         [SerializeField] private List<GameObject> prefabs;
 
+        public void SpawnObject()
+        {
+            Instantiate(
+                GetRandomPrefab(),
+                GetRandomPosition(),
+                GetRandomRotation(),
+                transform);
+        }
+
         private Vector3 GetRandomPosition()
         {
             Vector3 pos;
@@ -31,15 +40,6 @@ namespace Objects
             return Quaternion.Euler(rotation);
         }
 
-        private GameObject GetRandomGameObject() => prefabs[Random.Range(0, prefabs.Count - 1)];
-
-        public void SpawnObject()
-        {
-            Instantiate(
-                GetRandomGameObject(),
-                GetRandomPosition(),
-                GetRandomRotation(),
-                transform);
-        }
+        private GameObject GetRandomPrefab() => prefabs[Random.Range(0, prefabs.Count - 1)];
     }
 }

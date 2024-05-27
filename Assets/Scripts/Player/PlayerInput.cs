@@ -10,6 +10,7 @@ namespace Player
         public event Action onCancel;
         public event Action onSideMenuOpen;
         public event Action onQuickMenuOpen;
+
         private PlayerInputActions _inputActions;
 
 
@@ -30,6 +31,16 @@ namespace Player
 
             _inputActions.UI.Enable();
             _inputActions.UI.SideMenu.performed += OnSideMenuOpen;
+        }
+
+        private void OnDestroy()
+        {
+            _inputActions.FreeMovement.Inspect.performed -= OnInspect;
+            _inputActions.FreeMovement.Menu.performed -= OnQuickMenuOpen;
+
+            _inputActions.Inspection.CancelInspect.performed -= OnCancelInspect;
+
+            _inputActions.UI.SideMenu.performed -= OnSideMenuOpen;
         }
 
         private void OnSideMenuOpen(InputAction.CallbackContext obj)

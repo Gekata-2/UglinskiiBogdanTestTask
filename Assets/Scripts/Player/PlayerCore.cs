@@ -14,18 +14,17 @@ namespace Player
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private MouseMovement mouseMovement;
 
-        public event Action<Transform> OnObjectToInspectHit;
-        public event Action<State> OnGlobalStateChanged;
-        private PlayerInput _input;
-
-        private InspectableObject _inspectableObject;
-
         public enum State
         {
             Free,
             Inspect
         }
 
+        public event Action<Transform> OnObjectToInspectHit;
+        public event Action<State> OnGlobalStateChanged;
+
+        private PlayerInput _input;
+        private InspectableObject _inspectableObject;
         private State _state;
 
         private void Awake()
@@ -45,6 +44,7 @@ namespace Player
 
             sideMenu.OnSideMenuSetActive += OnSideMenuOpen;
             quickMenu.onResume += OnResume;
+
             ObjectsController.Instance.onObjectRemoved += OnObjectRemovedFromRegistry;
         }
 
@@ -57,7 +57,7 @@ namespace Player
 
             sideMenu.OnSideMenuSetActive -= OnSideMenuOpen;
             quickMenu.onResume -= OnResume;
-            
+
             ObjectsController.Instance.onObjectRemoved -= OnObjectRemovedFromRegistry;
         }
 
@@ -120,8 +120,8 @@ namespace Player
         {
             RemoveInspectableObject();
             SetGlobalState(State.Free);
-            
-            if (!sideMenu.IsActive) 
+
+            if (!sideMenu.IsActive)
                 SetFreeState();
         }
 
@@ -133,7 +133,7 @@ namespace Player
                     out RaycastHit hit,
                     100f, interactableLayers))
             {
-                if (hit.transform.TryGetComponent<InspectableObject>(out var obj))
+                if (hit.transform.TryGetComponent(out InspectableObject obj))
                 {
                     OnObjectToInspectHit?.Invoke(hit.transform);
                     _inspectableObject = obj;
@@ -155,9 +155,11 @@ namespace Player
         private void OnInspectableObjectDestroyed()
         {
             RemoveInspectableObject();
-            SetMoveMouseState(MouseMovement.State.Locked,
-                CursorLockMode.Confined,
-                PlayerMovement.State.Locked);
+            if (sideMenu.IsActive)
+                SetMenuOpenState();
+            else
+                SetFreeState();
+
             SetGlobalState(State.Free);
         }
 

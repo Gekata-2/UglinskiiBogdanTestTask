@@ -7,13 +7,13 @@ namespace Objects
     public class ObjectsController : MonoBehaviour
     {
         public static ObjectsController Instance { get; private set; }
-        private IObjectRegistry _registry;
-        private IObjectSpawner _objectSpawner;
         public event Action<string> onObjectAdded;
         public event Action<string> onObjectRemoved;
-        
 
-        public void Init(IObjectSpawner objectSpawner,IObjectRegistry objectRegistry)
+        private IObjectRegistry _registry;
+        private IObjectSpawner _objectSpawner;
+
+        public void Init(IObjectSpawner objectSpawner, IObjectRegistry objectRegistry)
         {
             if (Instance == null)
             {
@@ -30,17 +30,13 @@ namespace Objects
         public void Add(InspectableObject obj)
         {
             if (_registry.TryRegisterObject(obj))
-            {
                 onObjectAdded?.Invoke(obj.name);
-            }
         }
 
         public void Remove(string id)
         {
             if (_registry.TryUnregisterObject(id))
-            {
                 onObjectRemoved?.Invoke(id);
-            }
         }
 
         public void ShowObjects(List<string> ids)
@@ -48,9 +44,7 @@ namespace Objects
             foreach (var id in ids)
             {
                 if (_registry.TryGetObject(id, out var obj))
-                {
                     obj.Show();
-                }
             }
         }
 
@@ -60,9 +54,7 @@ namespace Objects
             foreach (var id in ids)
             {
                 if (_registry.TryGetObject(id, out var obj))
-                {
                     obj.Hide();
-                }
             }
         }
 
@@ -73,9 +65,7 @@ namespace Objects
             foreach (var id in ids)
             {
                 if (_registry.TryGetObject(id, out var obj))
-                {
                     obj.Alpha = alpha;
-                }
             }
         }
 
@@ -84,9 +74,7 @@ namespace Objects
             foreach (var id in ids)
             {
                 if (_registry.TryGetObject(id, out var obj))
-                {
                     obj.Color = color;
-                }
             }
         }
 
@@ -103,11 +91,9 @@ namespace Objects
         public void DestroyObjects(List<string> ids)
         {
             List<InspectableObject> objects = _registry.GetObject(ids);
-            
+
             for (int i = 0; i < objects.Count; i++)
-            {
                 Destroy(objects[i].gameObject);
-            }
         }
     }
 }

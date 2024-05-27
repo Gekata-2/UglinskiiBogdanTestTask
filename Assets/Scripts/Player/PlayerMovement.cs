@@ -8,11 +8,6 @@ namespace Player
         [SerializeField] private float rotationSpeed;
         [SerializeField] private float scrollSpeed;
         [SerializeField] private Transform cameraView;
-        private PlayerInput _input;
-        private MouseMovement _mouseMovement;
-        private PlayerCore _core;
-        private Transform _inspectedObject;
-        private State _state;
 
         public enum State
         {
@@ -21,7 +16,13 @@ namespace Player
             Locked
         }
 
-        public State CurrentState => _state;
+        private PlayerInput _input;
+        private PlayerCore _core;
+        private MouseMovement _mouseMovement;
+
+        private Transform _inspectedObject;
+        private State _state;
+
         private void Awake()
         {
             _input = GetComponent<PlayerInput>();
@@ -41,15 +42,12 @@ namespace Player
             _core.OnObjectToInspectHit -= OnObjectToInspect;
         }
 
+        public void SetState(State state) => _state = state;
+
         public void RemoveInspectableObject()
         {
             ResetRot();
             _inspectedObject = null;
-        }
-
-        public void SetState(State state)
-        {
-            _state = state;
         }
 
         private void ResetRot()
@@ -65,15 +63,9 @@ namespace Player
             }
         }
 
-        private void OnObjectToInspect(Transform obj)
-        {
-            _inspectedObject = obj;
-        }
+        private void OnObjectToInspect(Transform obj) => _inspectedObject = obj;
 
-        private void OnMouseHorizontalMove(float val)
-        {
-            transform.Rotate(Vector3.up * val);
-        }
+        private void OnMouseHorizontalMove(float value) => transform.Rotate(Vector3.up * value);
 
         private void Update()
         {
@@ -98,7 +90,7 @@ namespace Player
             Vector3 upwardsMovement = cameraView.up * input.y;
             Vector3 forwardMovement = cameraView.forward * input.z;
 
-            var posDelta = forwardMovement + sideMovement + upwardsMovement;
+            Vector3 posDelta = forwardMovement + sideMovement + upwardsMovement;
 
             transform.Translate(posDelta * (speed * Time.deltaTime), Space.World);
         }
@@ -109,20 +101,20 @@ namespace Player
             if (_inspectedObject == null)
                 return;
 
-            Vector2 input = _input.RotateAroundObjInput.normalized;
-
-            var inspectedObjectPosition = _inspectedObject.position;
-            transform.RotateAround(inspectedObjectPosition, Vector3.up,
-                rotationSpeed * input.x * Time.deltaTime);
-            transform.RotateAround(inspectedObjectPosition, -transform.right,
-                rotationSpeed * input.y * Time.deltaTime);
-
-            float scroll = _input.ScrollInput();
-
+            Vector2 moveInput = _input.RotateAroundObjInput.normalized;
+            float scrollInput = _input.ScrollInput();
+            
+            Vector3 inspectedObjectPosition = _inspectedObject.position;
             Vector3 dir = inspectedObjectPosition - cameraView.position;
+
+            transform.RotateAround(inspectedObjectPosition, Vector3.up,
+                rotationSpeed * moveInput.x * Time.deltaTime);
+            transform.RotateAround(inspectedObjectPosition, -transform.right,
+                rotationSpeed * moveInput.y * Time.deltaTime);
+            
             transform.Translate(
                 dir.normalized *
-                (scroll * dir.magnitude * scrollSpeed * Time.deltaTime),
+                (scrollInput * dir.magnitude * scrollSpeed * Time.deltaTime),
                 Space.World);
         }
     }

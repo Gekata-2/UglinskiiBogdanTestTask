@@ -11,8 +11,14 @@ namespace UI
         private bool _isActive;
         private void Start()
         {
-            start.onClick.AddListener(OnStart);
+            start.onClick.AddListener(OnStartClicked);
             exit.onClick.AddListener(OnExit);
+        }
+
+        private void OnDestroy()
+        {
+            start.onClick.RemoveAllListeners();
+            exit.onClick.RemoveAllListeners();
         }
 
         private void OnExit()
@@ -24,7 +30,7 @@ namespace UI
 #endif
         }
 
-        private void OnStart()
+        private void OnStartClicked()
         {
             SceneLoader.Instance.LoadSceneAsync("MainScene");
         }

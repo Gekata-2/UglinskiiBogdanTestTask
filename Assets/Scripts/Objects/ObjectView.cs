@@ -8,6 +8,7 @@ namespace Objects
     {
         [SerializeField] private List<MeshRenderer> views;
         [SerializeField] private Color defaultColor;
+        
         private float _alpha = 1f;
         private Color _color = Color.white;
 
@@ -40,7 +41,7 @@ namespace Objects
         {
             foreach (var view in views)
             {
-                Renderer rendererView = view.GetComponent<MeshRenderer>();
+                MeshRenderer rendererView = view.GetComponent<MeshRenderer>();
                 var material = rendererView.material;
                 material.color = new Color(material.color.r, material.color.g,
                     material.color.b, _alpha);
@@ -49,13 +50,13 @@ namespace Objects
 
         private void SetColor()
         {
-            Color value = _color;
+            Color color = _color;
             foreach (var view in views)
             {
-                Renderer rendererView = view.GetComponent<MeshRenderer>();
-                value.a = Alpha;
+                MeshRenderer rendererView = view.GetComponent<MeshRenderer>();
+                color.a = Alpha;
                 var material = rendererView.material;
-                material.color = value;
+                material.color = color;
             }
         }
     }
