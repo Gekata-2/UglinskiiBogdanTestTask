@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +10,7 @@ namespace Objects
         [SerializeField] private Vector2 boundsY;
         [SerializeField] private Vector2 boundsZ;
         [SerializeField] private List<GameObject> prefabs;
-        
+
         private Vector3 GetRandomPosition()
         {
             Vector3 pos;
@@ -40,12 +38,8 @@ namespace Objects
             GameObject go = Instantiate(
                 GetRandomGameObject(),
                 GetRandomPosition(),
-                Quaternion.identity,
+                GetRandomRotation(),
                 transform);
-            if (go.TryGetComponent(out InspectableObject obj))
-            {
-                obj.View.transform.rotation = GetRandomRotation();
-            }
         }
     }
 }

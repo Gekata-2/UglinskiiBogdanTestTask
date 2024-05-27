@@ -200,7 +200,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Cancel"",
+                    ""name"": ""CancelInspect"",
                     ""type"": ""Button"",
                     ""id"": ""1300b2ec-9e8b-4a62-98c9-396f0b6da1e1"",
                     ""expectedControlType"": ""Button"",
@@ -283,7 +283,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Cancel"",
+                    ""action"": ""CancelInspect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -330,7 +330,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Inspection = asset.FindActionMap("Inspection", throwIfNotFound: true);
         m_Inspection_Rotation = m_Inspection.FindAction("Rotation", throwIfNotFound: true);
         m_Inspection_Zoom = m_Inspection.FindAction("Zoom", throwIfNotFound: true);
-        m_Inspection_Cancel = m_Inspection.FindAction("Cancel", throwIfNotFound: true);
+        m_Inspection_CancelInspect = m_Inspection.FindAction("CancelInspect", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_SideMenu = m_UI.FindAction("SideMenu", throwIfNotFound: true);
@@ -467,14 +467,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IInspectionActions> m_InspectionActionsCallbackInterfaces = new List<IInspectionActions>();
     private readonly InputAction m_Inspection_Rotation;
     private readonly InputAction m_Inspection_Zoom;
-    private readonly InputAction m_Inspection_Cancel;
+    private readonly InputAction m_Inspection_CancelInspect;
     public struct InspectionActions
     {
         private @PlayerInputActions m_Wrapper;
         public InspectionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Rotation => m_Wrapper.m_Inspection_Rotation;
         public InputAction @Zoom => m_Wrapper.m_Inspection_Zoom;
-        public InputAction @Cancel => m_Wrapper.m_Inspection_Cancel;
+        public InputAction @CancelInspect => m_Wrapper.m_Inspection_CancelInspect;
         public InputActionMap Get() { return m_Wrapper.m_Inspection; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -490,9 +490,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
-            @Cancel.started += instance.OnCancel;
-            @Cancel.performed += instance.OnCancel;
-            @Cancel.canceled += instance.OnCancel;
+            @CancelInspect.started += instance.OnCancelInspect;
+            @CancelInspect.performed += instance.OnCancelInspect;
+            @CancelInspect.canceled += instance.OnCancelInspect;
         }
 
         private void UnregisterCallbacks(IInspectionActions instance)
@@ -503,9 +503,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
-            @Cancel.started -= instance.OnCancel;
-            @Cancel.performed -= instance.OnCancel;
-            @Cancel.canceled -= instance.OnCancel;
+            @CancelInspect.started -= instance.OnCancelInspect;
+            @CancelInspect.performed -= instance.OnCancelInspect;
+            @CancelInspect.canceled -= instance.OnCancelInspect;
         }
 
         public void RemoveCallbacks(IInspectionActions instance)
@@ -580,7 +580,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnRotation(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
-        void OnCancel(InputAction.CallbackContext context);
+        void OnCancelInspect(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

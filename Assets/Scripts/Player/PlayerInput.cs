@@ -26,7 +26,7 @@ namespace Player
             _inputActions.FreeMovement.Inspect.performed += OnInspect;
             _inputActions.FreeMovement.Menu.performed += OnQuickMenuOpen;
 
-            _inputActions.Inspection.Cancel.performed += OnCancel;
+            _inputActions.Inspection.CancelInspect.performed += OnCancelInspect;
 
             _inputActions.UI.Enable();
             _inputActions.UI.SideMenu.performed += OnSideMenuOpen;
@@ -42,7 +42,7 @@ namespace Player
             onQuickMenuOpen?.Invoke();
         }
 
-        private void OnCancel(InputAction.CallbackContext obj)
+        private void OnCancelInspect(InputAction.CallbackContext obj)
         {
             onCancel?.Invoke();
         }

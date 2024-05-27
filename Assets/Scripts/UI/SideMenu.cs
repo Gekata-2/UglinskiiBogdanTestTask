@@ -9,27 +9,37 @@ namespace UI
     {
         [SerializeField] private GameObject menu;
         [SerializeField] private PlayerInput playerInput;
-        
+
         public event Action<bool> OnSideMenuSetActive;
         private bool _isActive;
+        public bool IsActive => _isActive;
 
         private void Start()
         {
             playerInput.onSideMenuOpen += OnSideMenu;
         }
 
+        public void Show()
+        {
+            _isActive = true;
+            menu.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            _isActive = false;
+            menu.SetActive(false);
+        }
 
         private void OnSideMenu()
         {
             switch (_isActive)
             {
                 case true:
-                    _isActive = false;
-                    menu.SetActive(false);
+                    Hide();
                     break;
                 case false:
-                    _isActive = true;
-                    menu.SetActive(true);
+                    Show();
                     break;
             }
 

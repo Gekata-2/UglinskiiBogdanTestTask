@@ -15,11 +15,12 @@ namespace Player
         [SerializeField] private MouseMovement mouseMovement;
 
         public event Action<Transform> OnObjectToInspectHit;
+        public event Action<State> OnGlobalStateChanged;
         private PlayerInput _input;
 
         private InspectableObject _inspectableObject;
 
-        private enum State
+        public enum State
         {
             Free,
             Inspect
@@ -31,9 +32,7 @@ namespace Player
         {
             _input = GetComponent<PlayerInput>();
 
-            SetMoveMouseState(MouseMovement.State.Free,
-                CursorLockMode.Locked,
-                PlayerMovement.State.Free);
+            SetFreeState();
 
             SetGlobalState(State.Free);
         }
@@ -41,25 +40,29 @@ namespace Player
         private void Start()
         {
             _input.onInspect += OnInspect;
-            _input.onCancel += OnCancel;
+            _input.onCancel += OnCancelInspect;
             _input.onQuickMenuOpen += OnQuickMenuOpen;
 
             sideMenu.OnSideMenuSetActive += OnSideMenuOpen;
             quickMenu.onResume += OnResume;
+            ObjectsController.Instance.onObjectRemoved += OnObjectRemovedFromRegistry;
         }
+
 
         private void OnDestroy()
         {
             _input.onInspect -= OnInspect;
-            _input.onCancel -= OnCancel;
+            _input.onCancel -= OnCancelInspect;
             _input.onQuickMenuOpen -= OnQuickMenuOpen;
 
             sideMenu.OnSideMenuSetActive -= OnSideMenuOpen;
             quickMenu.onResume -= OnResume;
-            if (_inspectableObject != null)
-            {
-                _inspectableObject.onDestroy -= OnInspectableObjectDestroyed;
-            }
+            ObjectsController.Instance.onObjectRemoved -= OnObjectRemovedFromRegistry;
+
+            // if (_inspectableObject != null)
+            // {
+            //     _inspectableObject.onDestroy -= OnInspectableObjectDestroyed;
+            // }
         }
 
         private void SetGlobalState(State state)
@@ -76,33 +79,28 @@ namespace Player
                 default:
                     break;
             }
+
+            OnGlobalStateChanged?.Invoke(_state);
         }
 
 
         private void OnSideMenuOpen(bool isActive)
         {
+            if (quickMenu.IsActive)
+                return;
             switch (_state)
             {
                 case State.Free:
                     if (isActive)
-                        SetMoveMouseState(MouseMovement.State.Locked,
-                            CursorLockMode.Confined,
-                            PlayerMovement.State.Locked);
+                        SetMenuOpenState();
                     else
-                        SetMoveMouseState(MouseMovement.State.Free,
-                            CursorLockMode.Locked,
-                            PlayerMovement.State.Free);
-
+                        SetFreeState();
                     break;
                 case State.Inspect:
                     if (isActive)
-                        SetMoveMouseState(MouseMovement.State.Locked,
-                            CursorLockMode.Confined,
-                            PlayerMovement.State.Locked);
+                        SetMenuOpenState();
                     else
-                        SetMoveMouseState(MouseMovement.State.LookAt,
-                            CursorLockMode.Locked,
-                            PlayerMovement.State.Inspect);
+                        SetInspectState();
                     break;
                 default:
                     break;
@@ -111,27 +109,28 @@ namespace Player
 
         private void OnResume()
         {
-            SetMoveMouseState(MouseMovement.State.Free,
-                CursorLockMode.Locked,
-                PlayerMovement.State.Free);
+            if (sideMenu.IsActive)
+                return;
+
+            SetFreeState();
         }
 
         private void OnQuickMenuOpen()
         {
-            SetMoveMouseState(MouseMovement.State.Locked,
-                CursorLockMode.Confined,
-                PlayerMovement.State.Locked);
+            SetMenuOpenState();
         }
 
-        private void OnCancel()
+        private void OnCancelInspect()
         {
-            SetGlobalState(State.Free);
-            playerMovement.RemoveInspectableObject();
-            mouseMovement.RemoveInspectableObject();
-            RemoveInspectableObject();
-            SetMoveMouseState(MouseMovement.State.Free,
-                CursorLockMode.Locked,
-                PlayerMovement.State.Free);
+            if (sideMenu.IsActive)
+            {
+                RemoveInspectableObject();
+                SetGlobalState(State.Free);
+                return;
+            }
+
+
+            SetFreeState();
         }
 
 
@@ -146,28 +145,62 @@ namespace Player
                 {
                     OnObjectToInspectHit?.Invoke(hit.transform);
                     _inspectableObject = obj;
-                    obj.onDestroy += OnInspectableObjectDestroyed;
-                    SetMoveMouseState(MouseMovement.State.LookAt,
-                        CursorLockMode.Locked,
-                        PlayerMovement.State.Inspect);
-
+                    // obj.onDestroy += OnInspectableObjectDestroyed;
+                    SetInspectState();
                     SetGlobalState(State.Inspect);
                 }
             }
         }
 
+        private void OnObjectRemovedFromRegistry(string objName)
+        {
+            if (_inspectableObject == null)
+                return;
+            
+            if (_inspectableObject.name == objName)
+                OnInspectableObjectDestroyed();
+        }
+
         private void OnInspectableObjectDestroyed()
         {
-            playerMovement.RemoveInspectableObject();
-            mouseMovement.RemoveInspectableObject();
             RemoveInspectableObject();
-            SetMoveMouseState(MouseMovement.State.Free,
-                CursorLockMode.Locked,
-                PlayerMovement.State.Free);
+            SetMoveMouseState(MouseMovement.State.Locked,
+                CursorLockMode.Confined,
+                PlayerMovement.State.Locked);
             SetGlobalState(State.Free);
         }
 
-        private void RemoveInspectableObject() => _inspectableObject = null;
+        private void RemoveInspectableObject()
+        {
+            playerMovement.RemoveInspectableObject();
+            mouseMovement.RemoveInspectableObject();
+            _inspectableObject = null;
+        }
+
+
+        //Locked-Confined-Locked
+        private void SetMenuOpenState()
+        {
+            SetMoveMouseState(MouseMovement.State.Locked,
+                CursorLockMode.Confined,
+                PlayerMovement.State.Locked);
+        }
+
+        //LookAt-Locked-Inspect
+        private void SetInspectState()
+        {
+            SetMoveMouseState(MouseMovement.State.LookAt,
+                CursorLockMode.Locked,
+                PlayerMovement.State.Inspect);
+        }
+
+        //Free-Locked-Free
+        private void SetFreeState()
+        {
+            SetMoveMouseState(MouseMovement.State.Free,
+                CursorLockMode.Locked,
+                PlayerMovement.State.Free);
+        }
 
         private void SetMoveMouseState(MouseMovement.State mouseState, CursorLockMode cursorLockMode,
             PlayerMovement.State moveState)

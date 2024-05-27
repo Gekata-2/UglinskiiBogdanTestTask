@@ -11,6 +11,7 @@ namespace Objects
         private ObjectSpawner _objectSpawner;
         public event Action<string> onObjectAdded;
         public event Action<string> onObjectRemoved;
+        
 
         public void Init()
         {
@@ -102,8 +103,7 @@ namespace Objects
         public void DestroyObjects(List<string> ids)
         {
             List<InspectableObject> objects = _registry.GetObject(ids);
-            _registry.UnregisterObjects(ids);
-
+            
             for (int i = 0; i < objects.Count; i++)
             {
                 Destroy(objects[i].gameObject);

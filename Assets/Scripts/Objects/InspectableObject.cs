@@ -54,7 +54,7 @@ namespace Objects
         private void OnDestroy()
         {
             ObjectsController.Instance.Remove(name);
-            onDestroy?.Invoke();
+            //onDestroy?.Invoke();
         }
 
         public ObjectData GetData() => new() { Alpha = Alpha, 

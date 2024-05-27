@@ -21,6 +21,7 @@ namespace Player
             Locked
         }
 
+        public State CurrentState => _state;
         private void Awake()
         {
             _input = GetComponent<PlayerInput>();

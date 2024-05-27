@@ -178,7 +178,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Cancel",
+                    "name": "CancelInspect",
                     "type": "Button",
                     "id": "1300b2ec-9e8b-4a62-98c9-396f0b6da1e1",
                     "expectedControlType": "Button",
@@ -261,7 +261,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Cancel",
+                    "action": "CancelInspect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
